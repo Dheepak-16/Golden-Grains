@@ -21,7 +21,7 @@ function App() {
             <Route path='/forgetpassword' element={<ForgetPassword/>}></Route>
             <Route path='/otpverification' element={<OtpVerification/>}></Route>
             <Route path='/setpassword' element={<SetPassword/>}></Route>
-            <Route path='/home' element={<Home/>}></Route>
+            <Route path='/' element={<Home/>}></Route>
             <Route path='/categories' element={<Categories/>}></Route>
         </Routes>
       </BrowserRouter>

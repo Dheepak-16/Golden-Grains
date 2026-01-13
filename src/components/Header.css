@@ -1,0 +1,105 @@
+.background {
+    width: 100%;
+    background: #fff;
+}
+
+
+.logo {
+    /* border: 2px solid brown; */
+    width: 100px;
+    height: 100%;
+}
+
+.logo img {
+    /* border: 2px solid red; */
+    width: 100%;
+    height: 100%;
+}
+
+.homebars {
+    /* border: 2px solid green; */
+    flex: 1;
+}
+
+.homebar-items {
+    /* border: 2px solid skyblue; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.homebar-items li {
+    /* border: 2px solid blue; */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px;
+    color: #333;
+    cursor: pointer;
+    /* position: relative; */
+}
+
+.homebar-items li.active {
+    color: #2e7d32;
+}
+
+/* Icons */
+.nav-icon {
+    /* border: 2px solid yellow; */
+    font-size: 16px;
+}
+
+.green {
+    color: #2e7d32;
+}
+
+.badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    color: #fff;
+    margin-left: 4px;
+}
+
+.hot {
+    background: red;
+}
+
+.best {
+    background: green;
+}
+
+.offer {
+    background: red;
+}
+
+/* Right icons */
+.header-icons {
+    /* border: 2px solid skyblue; */
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 20px;
+    color: #000;
+}
+
+.cart {
+    position: relative;
+}
+
+/* .count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #000;
+  color: #fff;
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 50%;
+} */

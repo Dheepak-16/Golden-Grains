@@ -1,23 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
+import Categories from './components/Categories';
+import Home from './components/Home';
+import Login from './components/Login';
+import Signup from './components/SignUp';
+import ForgetPassword from './components/ForgetPassword';
+import OtpVerification from './components/OtpVerification';
+import SetPassword from './components/SetPassword';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Routes>
+            {/* <Route path='header' element={<Header/>}></Route> */}
+            <Route path='/signup' element={<Signup/>}></Route>
+            <Route path='/login' element={<Login/>}></Route>
+            <Route path='/forgetpassword' element={<ForgetPassword/>}></Route>
+            <Route path='/otpverification' element={<OtpVerification/>}></Route>
+            <Route path='/setpassword' element={<SetPassword/>}></Route>
+            <Route path='/home' element={<Home/>}></Route>
+            <Route path='/categories' element={<Categories/>}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

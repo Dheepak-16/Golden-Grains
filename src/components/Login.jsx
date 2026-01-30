@@ -6,12 +6,14 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, provider } from "../GoogleAuth/GoogleAuthentication";
 import { signInWithPopup } from "firebase/auth";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const API = "http://localhost:2000/api/auth"
 
 function Login() {
   const [showForgot, setShowForgot] = useState(false);
-  
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
   const [state, setState] = useState({
     email: "",
@@ -24,8 +26,18 @@ function Login() {
     setState({ ...state, [e.target.name]: e.target.value })
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   async function handleLogin(e) {
     e.preventDefault();
+
+    if (!emailRegex.test(email)) {
+      return alert("Enter valid email")
+    }
+
+    if (!password.trim()) {
+      return alert("Password cannot be empty");
+    }
 
     try {
       const res = await axios.post(`${API}/login`, state);
@@ -34,7 +46,7 @@ function Login() {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      navigate('/home');
+      navigate('/');
     }
 
     catch (error) {
@@ -61,19 +73,20 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       alert(res.data.message);
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       console.error(error);
       alert(error.response?.data?.message || "Google Signup Failed");
     }
   };
-
+ 
   return (
     <>
       <div className="login-container">
         <div className="login-card">
 
           {/* <h1 className="app-name">Golden Grains</h1> */}
+
           <h2 className="title">Welcome Back</h2>
           <p className="subtitle">Enter your credentials to continue</p>
 
@@ -82,8 +95,24 @@ function Login() {
             <input
               type="email" name="email" placeholder="Email Address" value={email} className="input" onChange={handleChange} />
 
-            <input
-              type="password" name="password" placeholder="Password" value={password} className="input" onChange={handleChange} />
+            <div className="password-box">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={password}
+                className="input"
+                onChange={handleChange}
+              />
+
+              <span
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+              </span>
+            </div>
+
 
             <div className="forgot" >
               <span onClick={() => setShowForgot(true)}>
@@ -110,7 +139,11 @@ function Login() {
         </div>
       </div>
       {showForgot && (
-        <ForgetPassword onClose={() => setShowForgot(false)} />
+        <ForgetPassword onClose={() => setShowForgot(false)}
+          onSuccess={(email) => {
+            setShowForgot(false);
+          }}
+        />
       )}
     </>
   );

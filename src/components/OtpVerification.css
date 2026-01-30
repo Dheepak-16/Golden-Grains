@@ -34,6 +34,7 @@
     /* border: 2px solid red; */
     font-size: 22px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .otp-header h4 {
@@ -125,12 +126,18 @@
     margin-bottom: 20px;
 }
 
-.change-email {
+.change-email{
     /* border: 2px solid brown; */
     font-size: 14px;
     color: #2575fc;
     cursor: pointer;
 }
+
+.change-email a {
+    text-decoration: none;
+    color: #2575fc;
+}
+
 
 @media (max-width: 480px) {
     .otp-card {

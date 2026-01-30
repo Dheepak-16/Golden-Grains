@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../GoogleAuth/GoogleAuthentication";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const API = "http://localhost:2000/api/auth";
 
 function Signup() {
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
     const [user, setUser] = useState({
         userId: "",
         name: "",
@@ -21,8 +23,28 @@ function Signup() {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
 
+    const nameRegex = /^[A-Za-z]+( [A-Za-z]+)*$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mobileRegex = /^[6-9]\d{9}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
     async function handleSignup(e) {
         e.preventDefault();
+
+        const { name, email, mobileNumber, password } = user;
+
+        if (!nameRegex.test(name)) {
+            return alert("Enter a valid name")
+        }
+        if (!emailRegex.test(email)) {
+            return alert("Enter a valid email")
+        }
+        if (!mobileRegex.test(mobileNumber)) {
+            return alert("Enter a valid mobile number")
+        }
+        if (!passwordRegex.test(password)) {
+            return alert("Password must contain at least 8 characters, one uppercase, one lowercase, one number & one special character")
+        }
 
         try {
             const res = await axios.post(`${API}/signup`, user);
@@ -44,7 +66,7 @@ function Signup() {
                 {
                     name: googleUser.displayName,
                     email: googleUser.email,
-                    googleId: googleUser.uid   // ✅ FIXED
+                    googleId: googleUser.uid
                 }
             );
 
@@ -52,7 +74,7 @@ function Signup() {
             localStorage.setItem("user", JSON.stringify(res.data.user));
 
             alert(res.data.message);
-            navigate("/home"); // or dashboard
+            navigate("/");
         } catch (error) {
             console.error(error);
             alert(error.response?.data?.message || "Google Signup Failed");
@@ -73,7 +95,22 @@ function Signup() {
 
                     <input type="tel" name="mobileNumber" maxLength={10} placeholder="Mobile Number" className="input" onChange={handleChange} />
 
-                    <input type="password" name="password" placeholder="Password" className="input" onChange={handleChange} />
+                    <div className="password-box">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="Password"
+                            className="input"
+                            onChange={handleChange}
+                        />
+
+                        <span
+                            className="eye-icon"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+                        </span>
+                    </div>
 
                     <button className="signup-btn" >Sign Up</button>
                 </form>

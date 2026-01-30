@@ -12,6 +12,7 @@
     "bootstrap-icons": "^1.13.1",
     "dom": "^0.0.3",
     "firebase": "^12.7.0",
+    "navigate": "^0.3.6",
     "nodemailer": "^7.0.12",
     "react": "^19.2.3",
     "react-bootstrap": "^2.10.10",

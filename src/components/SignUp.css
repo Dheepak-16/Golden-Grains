@@ -45,6 +45,31 @@
   border-color: #2575fc;
 }
 
+.password-box {
+  position: relative;
+  width: 100%;
+}
+
+.password-box .input {
+  width: 100%;
+  padding-right: 45px;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-80%);
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.eye-icon:hover {
+  color: #000;
+}
+
+
 .signup-btn {
   width: 100%;
   padding: 15px;

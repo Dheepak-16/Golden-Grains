@@ -1,14 +1,17 @@
 import React from "react";
 import "./OtpVerification.css";
+import { Link } from "react-router-dom";
+
+const API = "http://localhost:2000/api/auth";
 
 const OtpVerification = () => {
+
   return (
     <div className="otp-container">
       <div className="otp-card">
 
         <div className="otp-header">
-          <span className="back-arrow">←</span>
-          <h4>Security</h4>
+          <span><Link to="/forgetpassword" className="back-arrow">←</Link></span>
         </div>
 
         <div className="otp-icon-wrapper">
@@ -32,14 +35,15 @@ const OtpVerification = () => {
           Didn’t receive the code?
           <br />
           <span className="resend">
-            Resend Code <span className="timer">in 00:55</span>
+            Resend OTP <span className="timer">in 00:55</span>
           </span>
         </p>
 
         <button className="verify-btn">Verify</button>
 
         <div className="change-email">
-          ✎ Change Email
+          {/* ✎ Change Email */}
+          <Link to='/forgetpassword'>✎ Change Email</Link>
         </div>
 
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 import "./OtpVerification.css";
 import { Link } from "react-router-dom";
 
-const API = "http://localhost:2000/api/auth";
+// const API = "http://localhost:2000/api/auth";
 
 const OtpVerification = () => {
 

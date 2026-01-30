@@ -23,14 +23,6 @@ const Home = () => {
   const BASE_URL = "http://localhost:2000";
   const navigate = useNavigate();
 
-  const organicDescriptions = [
-    "Traditional Organic Rice",
-    "Naturally Grown Millets",
-    "Chemical-Free Pulses",
-    "Healthy Cold-Pressed Oils",
-    "Chemical-Free Peanut Candy"
-  ];
-
   /* ================= USER ================= */
   useEffect(() => {
     const storedUser = localStorage.getItem("user");

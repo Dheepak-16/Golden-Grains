@@ -1,83 +1,172 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaArrowRight } from "react-icons/fa";
 import "./All_Category.css";
+import Header from "./Header";
+import { useParams } from "react-router-dom";
 
 const BASE_URL = "http://localhost:2000";
 
-const All_Category = () => {
-  const [allCategory, setAllCategory] = useState(null);
-  const [filteredItems, setFilteredItems] = useState([]);
-  const [showBriyani, setShowBriyani] = useState(false);
+/* CATEGORY ORDER */
+const categoriesOrder = [
+  "rajabogam",
+  "briyani",
+  "idly",
+  "raw",
+  "dhal",
+  "oils",
+  "millet"
+];
 
+/* DISPLAY LABEL */
+const categoryLabels = {
+  rajabogam: "Rajabogam Rice",
+  briyani: "Briyani Rice",
+  idly: "Idly Rice",
+  raw: "Raw Rice",
+  dhal: "Dhal",
+  oils: "Oils",
+  millet: "Millets"
+};
+
+const All_Category = () => {
+
+  /* GET CATEGORY FROM URL */
+  const { category } = useParams();
+
+  const [allCategory, setAllCategory] = useState(null);
+  const [selectedSize, setSelectedSize] = useState({});
+  const [activeCategory, setActiveCategory] =
+    useState(category || "rajabogam");
+
+  /* SYNC CATEGORY WITH URL */
+  useEffect(() => {
+     if (category) setActiveCategory(category);
+  }, [category]);
+
+  /* FETCH DATA */
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/allcategory`)
-      .then((res) => {
-        setAllCategory(res.data);
-        setFilteredItems(res.data.categories);
-      })
+      .then((res) => setAllCategory(res.data))
       .catch((err) => console.log(err));
   }, []);
 
-  /* 🔽 FILTER BRIYANI */
-  const showBriyaniRice = () => {
-    const briyaniItems = allCategory.categories.filter(
-      (item) => item.category === "briyani"
-    );
-    setFilteredItems(briyaniItems);
-    setShowBriyani(true);
-  };
+  /* FILTER PRODUCTS */
+  const filteredProducts =
+    allCategory?.categories?.filter(
+      (item) => item.category === activeCategory
+    ) || [];
+
+  /* NEXT CATEGORY LOGIC */
+  const currentIndex = categoriesOrder.indexOf(activeCategory);
+  const nextCategory =
+    categoriesOrder[(currentIndex + 1) % categoriesOrder.length];
 
   return (
-    <div className="category-wrapper">
+    <>
+      <Header />
 
-      <h2 className="page-title">
-        {showBriyani ? "Briyani Rice" : "All Categories"}
-      </h2>
+      <div className="category-wrapper">
 
-      <h2 className="page-title2">
-        {showBriyani ? "Premium Briyani Selection" : "Rajabogam Rice"}
-      </h2>
+        {/* TITLE */}
+        <h2 className="page-title">All Categories</h2>
+        <h3 className="page-title2">
+          {categoryLabels[activeCategory]}
+        </h3>
 
-      <div className="product-grid">
-        {filteredItems?.map((item, index) => (
-          <div key={index} className="product-card">
+        {/* PRODUCTS */}
+        <div className="product-grid">
+          {filteredProducts.map((item, index) => {
+            const sizes = item.sizes || [];
 
-            <span className="discount-badge">18% OFF</span>
+            const activeSize =
+              sizes.find((s) => s.label === selectedSize[index]) ||
+              sizes[0];
 
-            <div className="img-box">
-              <img
-                src={`${BASE_URL}${item.imageUrl}`}
-                alt={item.name}
-              />
-            </div>
+            const priceAvailable =
+              activeSize?.price !== null &&
+              activeSize?.price !== undefined;
 
-            <div className="card-body">
-              <h4>{item.name}</h4>
+            return (
+              <div key={index} className="product-card">
 
-              <div className="price-row">
-                <span className="price">₹{item.price}</span>
-                <span className="old-price">₹{item.mrp}</span>
+                {/* SIZE SELECT */}
+                <div className="qty-box">
+                  <select
+                    value={selectedSize[index] || sizes[0]?.label}
+                    onChange={(e) =>
+                      setSelectedSize({
+                        ...selectedSize,
+                        [index]: e.target.value
+                      })
+                    }
+                  >
+                    {sizes.map((s, i) => (
+                      <option key={i} value={s.label}>
+                        {s.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* IMAGE */}
+                <div className="img-box">
+                  <img
+                    src={`${BASE_URL}${item.imageUrl}`}
+                    alt={item.name}
+                  />
+                </div>
+
+                {/* DETAILS */}
+                <div className="card-body">
+                  <h4>{item.name}</h4>
+
+                  <div className="price-row">
+                    {priceAvailable ? (
+                      <>
+                        <span className="price">
+                          ₹{activeSize.price}
+                        </span>
+
+                        {activeSize.mrp && (
+                          <span className="old-price">
+                            ₹{activeSize.mrp}
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <span className="not-available">
+                        Not Available
+                      </span>
+                    )}
+                  </div>
+
+                  <button
+                    className="add-btn"
+                    disabled={!priceAvailable}
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+
               </div>
-
-              <button className="add-btn">Add to Cart</button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* 🔽 BOTTOM CENTER ARROW */}
-      {!showBriyani && (
-        <div className="arrow-container">
-          <button className="arrow-btn" onClick={showBriyaniRice}>
-            <FaArrowRight />
-          </button>
-          <p className="arrow-text">View Briyani Rice</p>
+            );
+          })}
         </div>
-      )}
 
-    </div>
+        {/* NEXT CATEGORY ARROW */}
+        <div
+          className="arrow-wrapper"
+          onClick={() => setActiveCategory(nextCategory)}
+        >
+          <div className="arrow-circle">→</div>
+          <p className="next-category-text">
+            {categoryLabels[nextCategory]}
+          </p>
+        </div>
+
+      </div>
+    </>
   );
 };
 

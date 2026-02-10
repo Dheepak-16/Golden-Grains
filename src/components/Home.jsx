@@ -2,36 +2,17 @@ import React, { useEffect, useState } from "react";
 import "./Home.css";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import logo from "../assets/logo.png";
-import { IoSearchOutline, IoPersonCircle } from "react-icons/io5";
-import { FaHome, FaFire } from "react-icons/fa";
-import { AiOutlineHeart } from "react-icons/ai";
-import { HiOutlineShoppingBag } from "react-icons/hi";
-
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 import axios from "axios";
 
 const Home = () => {
-  const [user, setUser] = useState(null);
-  const [showLogout, setShowLogout] = useState(false);
-
   const [carousel, setCarousel] = useState(null);
   const [products, setProducts] = useState([]);
   const [bestSelling, setBestSelling] = useState(null);
-
-  const BASE_URL = "http://localhost:2000";
   const navigate = useNavigate();
+  const BASE_URL = "http://localhost:2000";
 
-  /* ================= USER ================= */
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
-  /* ================= FETCH DATA ================= */
   useEffect(() => {
     axios.get(`${BASE_URL}/api/carousel`)
       .then(res => setCarousel(res.data))
@@ -46,63 +27,11 @@ const Home = () => {
       .catch(err => console.log(err));
   }, []);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
-
   return (
     <div>
+      <Header />
 
-      {/* ================= HEADER ================= */}
-      <div className="background">
-        <div className="headerbar">
-          <div className="logo">
-            <img src={logo} alt="logo" />
-          </div>
-
-          <ul className="homebar-items">
-            <li className="homelogo"><FaHome /> Home</li>
-            <li className="allcategorylogo" onClick={()=> navigate("/allcategories")}>All Categories</li>
-            <li className="active"><FaFire /> Best Selling</li>
-            <li className="ggspeciallogo"><AiOutlineHeart /> GG Special</li>
-            <li className="trackorderlogo">Track Order</li>
-          </ul>
-
-          <div className="header-icons">
-            <span className="icon-item">
-              <IoSearchOutline />
-            </span>
-
-            <div
-              className="icon-item user-box"
-              onMouseEnter={() => setShowLogout(true)}
-              onMouseLeave={() => setShowLogout(false)}
-            >
-              <IoPersonCircle />
-              <span className="username">
-                {user ? user.name : "Login"}
-              </span>
-
-              {user && showLogout && (
-                <div className="logout-box" onClick={handleLogout}>
-                  Logout
-                </div>
-              )}
-            </div>
-
-            <span className="icon-item">
-              <AiOutlineHeart />
-            </span>
-
-            <span className="icon-item">
-              <HiOutlineShoppingBag />
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* ================= CAROUSEL ================= */}
+      {/* CAROUSEL */}
       {carousel && (
         <Carousel fade interval={3000}>
           {carousel.images.map((img, index) => (
@@ -112,35 +41,48 @@ const Home = () => {
                 src={`${BASE_URL}${img.imageUrl}`}
                 alt="banner"
               />
-              <Carousel.Caption>
-                <h3>{carousel.title}</h3>
-                <p>{carousel.subtitle}</p>
-              </Carousel.Caption>
             </Carousel.Item>
           ))}
         </Carousel>
       )}
 
-      {/* ================= ORGANIC RANGE ================= */}
+      {/* ORGANIC RANGE */}
       <div className="organic-range">
-        <h2>OUR ORGANIC RANGE</h2>
+        <h2>Our Organic Range</h2>
+      </div>
+      <div className="range-list">
+        {products.map((item, index) => (
+          <div
+            key={index}
+            className="range-item"
+            onClick={() => {
+              let category = "rajabogam";
 
-        <div className="range-list">
-          {products.map((item, index) => (
-            <div key={index} className="range-item">
-              <div className="range-circle">
-                <img
-                  src={`${BASE_URL}${item.imageUrl}`}
-                  alt={item.name}
-                />
-              </div>
-              <p>{item.name}</p>
+              if (item.name.toLowerCase().includes("rice"))
+                category = "rajabogam";
+              else if (item.name.toLowerCase().includes("millet"))
+                category = "millet";
+              else if (item.name.toLowerCase().includes("pulse") || item.name.toLowerCase().includes("dhal"))
+                category = "dhal";
+              else if (item.name.toLowerCase().includes("oil"))
+                category = "oils";
+
+              navigate(`/allcategories/${category}`);
+            }}
+          >
+            <div className="range-circle">
+              <img
+                src={`${BASE_URL}${item.imageUrl}`}
+                alt={item.name}
+              />
             </div>
-          ))}
-        </div>
+
+            <p>{item.name}</p>
+          </div>
+        ))}
       </div>
 
-      {/* ================= BEST SELLING ================= */}
+      {/* BEST SELLING */}
       <div className="best-selling">
         <h2>BEST SELLING PRODUCTS</h2>
 
@@ -156,7 +98,13 @@ const Home = () => {
 
               <div className="bs-info">
                 <h4>{item.name}</h4>
-                <span className="bs-price">₹{item.price}</span>
+
+                <div className="price-row">
+                  <span className="bs-price">₹{item.price}</span>
+                  {item.mrp && (
+                    <span className="old-price">₹{item.mrp}</span>
+                  )}
+                </div>
 
                 <button className="bs-btn">
                   View Product →
@@ -166,7 +114,6 @@ const Home = () => {
           ))}
         </div>
       </div>
-
     </div>
   );
 };

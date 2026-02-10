@@ -7,7 +7,7 @@ const API = "http://localhost:2000/api/auth";
 
 const ForgetPassword = ({ onClose, onSuccess }) => {
     const navigate = useNavigate();
-    const[email, setEmail] = useState("");
+    const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
 
     function handleChange(e) {
@@ -26,9 +26,11 @@ const ForgetPassword = ({ onClose, onSuccess }) => {
             setLoading(true);
             const res = await axios.post(`${API}/forgetpassword`, { email });
             alert(res.data.message);
+            
+            localStorage.setItem("resetEmail", email); // ⭐ Important
             onSuccess(email);
-
             navigate('/otpVerification');
+
         } catch (error) {
             alert(error.response?.data?.message || "something went wrong");
         } finally {
@@ -50,7 +52,7 @@ const ForgetPassword = ({ onClose, onSuccess }) => {
                     <form onSubmit={handleSubmit}>
                         <div className="fp-input-group">
                             <label>Email Address</label>
-                            <input type="email" placeholder="example@domain.com" value={email} onChange={handleChange}/>
+                            <input type="email" placeholder="example@domain.com" value={email} onChange={handleChange} />
                         </div>
 
                         <button className="fp-btn" disabled={loading}>

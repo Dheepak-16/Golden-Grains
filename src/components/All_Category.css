@@ -1,26 +1,32 @@
+/* MAIN WRAPPER */
 .category-wrapper {
+  /* border: 2px solid red; */
   padding: 40px;
   background: #f7f7f7;
   min-height: 100vh;
 }
 
+/* TITLES */
 .page-title {
+  /* border: 2px solid black; */
   text-align: center;
   font-size: 26px;
   font-weight: 700;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .page-title2 {
+  /* border: 2px solid green; */
   text-align: center;
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 30px;
-  color: rgb(4, 68, 4);
+  color: #0b6623;
 }
 
 /* GRID */
 .product-grid {
+  /* border: 2px solid black; */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 24px;
@@ -30,85 +36,103 @@
 
 /* CARD */
 .product-card {
+  /* border: 2px solid red; */
   background: #fff;
-  border-radius: 12px;
-  padding: 14px;
+  border-radius: 14px;
+  padding: 16px;
   position: relative;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.14);
 }
 
-/* DISCOUNT */
-.discount-badge {
+/* SIZE DROPDOWN */
+.qty-box {
+  /* border: 2px solid brown; */
   position: absolute;
-  top: 12px;
-  left: 12px;
-  background: #2e7d32;
-  color: #fff;
-  font-size: 12px;
-  padding: 4px 10px;
+  top: 18px;
+  right: 12px;
+}
+
+.qty-box select {
+  padding: 6px 10px;
+  font-size: 13px;
   border-radius: 6px;
-  font-weight: 600;
+  border: 1px solid #ccc;
+  cursor: pointer;
 }
 
 /* IMAGE */
 .img-box {
-  height: 170px;
+  /* border: 2px solid gold; */
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  padding-top: 25px;
 }
 
 .img-box img {
+  /* border: 2px solid green; */
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
 
-/* BODY */
+/* PRODUCT TITLE */
 .card-body h4 {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
-/* PRICE */
+/* PRICE SECTION */
 .price-row {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
+/* FINAL PRICE */
 .price {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #000;
 }
 
+/* MRP */
 .old-price {
-  font-size: 14px;
+  font-size: 15px;
   color: #9ca3af;
   text-decoration: line-through;
 }
 
-/* ADD BUTTON */
+/* NOT AVAILABLE */
+.not-available {
+  color: #999;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ADD TO CART BUTTON */
 .add-btn {
   width: 100%;
-  padding: 10px;
+  padding: 11px;
   border-radius: 8px;
   border: 1px solid #e11d48;
   background: #fff;
   color: #e11d48;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: 0.3s;
 }
 
 .add-btn:hover {
@@ -116,30 +140,61 @@
   color: #fff;
 }
 
-/* ARROW */
-.arrow-container {
-  margin-top: 50px;
-  text-align: center;
+.add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.arrow-btn {
-  width: 55px;
-  height: 55px;
+/* ARROW BUTTON */
+.arrow-wrapper {
+  margin-top: 60px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.arrow-circle {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: #111;
   color: #fff;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  transition: 0.3s;
 }
 
-.arrow-btn:hover {
+.arrow-circle:hover {
   transform: scale(1.15);
 }
 
-.arrow-text {
+.next-category-text {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 15px;
   color: #555;
+}
+
+.range-item {
+  cursor: pointer;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .category-wrapper {
+    padding: 20px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .img-box {
+    height: 140px;
+  }
+
+  .price {
+    font-size: 18px;
+  }
 }

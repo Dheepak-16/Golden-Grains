@@ -1,65 +1,90 @@
-import React from 'react'
-import './Header.css'
-import logo from '../assets/logo.png'
-import { IoSearchOutline } from "react-icons/io5";
+import React, { useState, useEffect } from "react";
+import "./Header.css";
+import logo from "../assets/logo.png";
+
+import { IoSearchOutline, IoPersonCircle } from "react-icons/io5";
 import { FaHome, FaFire } from "react-icons/fa";
 import { AiOutlineHeart } from "react-icons/ai";
-import { IoPersonCircle } from "react-icons/io5";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { BiUser } from "react-icons/bi";
+
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  return (
-    <div className="background">
-      <div className="headerbar">
+  const [user, setUser] = useState(null);
+  const [showLogout, setShowLogout] = useState(false);
 
-        <div className="logo">
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
+  return (
+    <header className="header">
+      <div className="header-container">
+
+        {/* LOGO */}
+        <div className="logo" onClick={() => navigate("/")}>
           <img src={logo} alt="logo" />
         </div>
 
-        <div className="homebars">
-          <ul className="homebar-items">
+        {/* NAV MENU */}
+        <nav className="nav-menu">
+          <ul>
+            <li onClick={() => navigate("/")}>
+              <FaHome /> Home
+            </li>
+            <li onClick={() => navigate("/allcategories/rajabogam")}>
+              All Categories
+            </li>
             <li>
-              <FaHome className="nav-icon" />
-              Home
+              <FaFire /> Best Selling
             </li>
-
-            <li>All categories</li>
-
-            <li className="active badge-item">
-              <FaFire className="nav-icon green" />
-              Best selling
-              {/* <span className="badge hot">HOT</span> */}
+            <li>
+              <AiOutlineHeart /> GG Special
             </li>
-
-            <li className="badge-item">
-              <AiOutlineHeart className="nav-icon" />
-              GG Special
-              {/* <span className="badge best">BEST</span> */}
-            </li>
-
-            <li className="badge-item">
-              Special Combo
-              {/* <span className="badge offer">Offers</span> */}
-            </li>
-
             <li>Track Order</li>
-
           </ul>
-        </div>
+        </nav>
 
+        {/* RIGHT ICONS */}
         <div className="header-icons">
+
           <IoSearchOutline />
-          <IoPersonCircle />
-          <AiOutlineHeart />
-          <div className="cart">
-            <HiOutlineShoppingBag />
-            {/* <span className="count">0</span> */}
+
+          {/* USER DROPDOWN */}
+          <div
+            className="user-box"
+            onMouseEnter={() => user && setShowLogout(true)}
+            onMouseLeave={() => setShowLogout(false)}
+            onClick={() => !user && navigate("/login")}
+          >
+            <IoPersonCircle />
+
+            <span className="username">
+              {user ? user.name : "Login"}
+            </span>
+
+            {user && showLogout && (
+              <div className="logout-box" onClick={handleLogout}>
+                Logout
+              </div>
+            )}
           </div>
+
+          <AiOutlineHeart />
+          <HiOutlineShoppingBag />
+
         </div>
       </div>
-    </div>
-  )
-}
+    </header>
+  );
+};
 
-export default Header
+export default Header;

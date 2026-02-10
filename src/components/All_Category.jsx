@@ -4,7 +4,8 @@ import "./All_Category.css";
 import Header from "./Header";
 import { useParams } from "react-router-dom";
 
-const BASE_URL = "http://localhost:2000";
+// const BASE_URL = "http://localhost:2000";
+const BASE_URL = "https://golden-grains-backend.onrender.com";
 
 /* CATEGORY ORDER */
 const categoriesOrder = [

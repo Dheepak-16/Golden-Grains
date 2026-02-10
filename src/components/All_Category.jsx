@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 
 // const BASE_URL = "http://localhost:2000";
 const BASE_URL = "https://golden-grains-backend.onrender.com";
+// const BASE_URL = process.env.REACT_APP_API_URL;
 
 /* CATEGORY ORDER */
 const categoriesOrder = [
@@ -41,7 +42,7 @@ const All_Category = () => {
 
   /* SYNC CATEGORY WITH URL */
   useEffect(() => {
-     if (category) setActiveCategory(category);
+    if (category) setActiveCategory(category);
   }, [category]);
 
   /* FETCH DATA */

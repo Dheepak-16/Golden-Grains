@@ -11,8 +11,8 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [bestSelling, setBestSelling] = useState(null);
   const navigate = useNavigate();
-  const BASE_URL = "http://localhost:2000";
-  // const BASE_URL = "https://golden-grains-backend.onrender.com";
+  // const BASE_URL = "http://localhost:2000";
+  const BASE_URL = "https://golden-grains-backend.onrender.com";
 
   useEffect(() => {
     axios.get(`${BASE_URL}/api/carousel`)

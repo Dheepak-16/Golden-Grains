@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./All_Category.css";
-// import Header from "./Header";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// const BASE_URL = "http://localhost:2000";
 const BASE_URL = "https://golden-grains-backend.vercel.app/api";
+const IMAGE_URL = "https://golden-grains-backend.vercel.app";
 
-/* CATEGORY ORDER */
 const categoriesOrder = [
   "rajabogam",
   "briyani",
@@ -20,7 +18,6 @@ const categoriesOrder = [
   "millet"
 ];
 
-/* DISPLAY LABEL */
 const categoryLabels = {
   rajabogam: "Rajabogam Rice",
   briyani: "Briyani Rice",
@@ -41,34 +38,28 @@ const All_Category = () => {
   const [activeCategory, setActiveCategory] =
     useState(category || "rajabogam");
 
-  /* SYNC URL CATEGORY */
   useEffect(() => {
     if (category) setActiveCategory(category);
   }, [category]);
 
-  /* FETCH PRODUCTS */
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/api/allcategory`)
+      .get(`${BASE_URL}/allcategory`)
       .then((res) => setAllCategory(res.data))
       .catch((err) => console.log(err));
   }, []);
 
-  /* FILTER PRODUCTS */
   const filteredProducts =
     allCategory?.categories?.filter(
       (item) => item.category === activeCategory
     ) || [];
 
-  /* NEXT CATEGORY */
   const currentIndex = categoriesOrder.indexOf(activeCategory);
   const nextCategory =
     categoriesOrder[(currentIndex + 1) % categoriesOrder.length];
 
   return (
     <>
-      {/* <Header /> */}
-
       <div className="category-wrapper">
 
         <h2 className="page-title">All Categories</h2>
@@ -114,7 +105,7 @@ const All_Category = () => {
 
                 <div className="img-box">
                   <img
-                    src={`${BASE_URL}${item.imageUrl}`}
+                    src={`${IMAGE_URL}${item.imageUrl}`}
                     alt={item.name}
                   />
                 </div>
@@ -145,7 +136,6 @@ const All_Category = () => {
 
                   <div className="btn-row">
 
-                    {/* ADD TO CART */}
                     <button
                       className="add-btn"
                       disabled={!priceAvailable}
@@ -202,7 +192,6 @@ const All_Category = () => {
 
       </div>
 
-      {/* TOAST */}
       <ToastContainer
         position="top-right"
         autoClose={2000}

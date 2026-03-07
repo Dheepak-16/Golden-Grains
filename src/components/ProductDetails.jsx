@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import Header from "../components/Header";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./ProductDetails.css";
 
-const BASE_URL = "http://localhost:2000";
+const BASE_URL = "https://golden-grains-backend.vercel.app/api";
+const IMAGE_URL = "https://golden-grains-backend.vercel.app";
 
 const ProductDetails = () => {
 
@@ -21,10 +21,8 @@ const ProductDetails = () => {
   useEffect(() => {
 
     axios
-      .get(`${BASE_URL}/api/productdetails/${name}`)
+      .get(`${BASE_URL}/productdetails/${name}`)
       .then((res) => {
-
-        console.log("Product Data:", res.data); // debug
 
         setProduct(res.data);
         setSelectedSize(res.data?.sizes?.[0]?.label || "");
@@ -44,11 +42,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      {/* <Header /> */}
-
       <div className="detail-wrapper">
-
-        {/* HEADER */}
 
         <div className="detail-header">
 
@@ -69,34 +63,24 @@ const ProductDetails = () => {
 
         </div>
 
-        {/* PRODUCT IMAGE */}
-
         <div className="detail-image">
           <img
-            src={`${BASE_URL}${product?.imageUrl}`}
+            src={`${IMAGE_URL}${product?.imageUrl}`}
             alt={product?.name}
           />
         </div>
-
-        {/* PRODUCT DETAILS */}
 
         <div className="detail-body">
 
           <h2>{product?.name}</h2>
 
-          {/* RICE VARIETY */}
-
           <p className="detail-sub">
             Variety : {product?.riceVariety || "Not Available"}
           </p>
 
-          {/* MANUFACTURER */}
-
           <p className="detail-sub">
             Manufacturer : {product?.manufacturer || "Not Available"}
           </p>
-
-          {/* PRICE */}
 
           <div className="detail-price">
 
@@ -111,8 +95,6 @@ const ProductDetails = () => {
             )}
 
           </div>
-
-          {/* SIZE SELECT */}
 
           <div className="size-select">
 
@@ -132,8 +114,6 @@ const ProductDetails = () => {
             </select>
 
           </div>
-
-          {/* ADD TO CART */}
 
           <button
             className="detail-cart-btn"
@@ -162,15 +142,9 @@ const ProductDetails = () => {
 
       </div>
 
-      {/* TOAST */}
-
       <ToastContainer
         position="top-right"
         autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        pauseOnHover
       />
 
     </>

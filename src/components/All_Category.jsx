@@ -6,7 +6,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const BASE_URL = "http://localhost:2000";
+// const BASE_URL = "http://localhost:2000";
+const BASE_URL = "https://golden-grains-backend.vercel.app/api";
 
 /* CATEGORY ORDER */
 const categoriesOrder = [

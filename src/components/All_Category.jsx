@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./All_Category.css";
-import Header from "./Header";
-import { useParams } from "react-router-dom";
+// import Header from "./Header";
+import { useParams, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-// const BASE_URL = "http://localhost:2000";
-const BASE_URL = "https://golden-grains-backend.onrender.com";
-// const BASE_URL = process.env.REACT_APP_API_URL;
+const BASE_URL = "http://localhost:2000";
 
 /* CATEGORY ORDER */
 const categoriesOrder = [
@@ -32,20 +32,20 @@ const categoryLabels = {
 
 const All_Category = () => {
 
-  /* GET CATEGORY FROM URL */
   const { category } = useParams();
+  const navigate = useNavigate();
 
   const [allCategory, setAllCategory] = useState(null);
   const [selectedSize, setSelectedSize] = useState({});
   const [activeCategory, setActiveCategory] =
     useState(category || "rajabogam");
 
-  /* SYNC CATEGORY WITH URL */
+  /* SYNC URL CATEGORY */
   useEffect(() => {
     if (category) setActiveCategory(category);
   }, [category]);
 
-  /* FETCH DATA */
+  /* FETCH PRODUCTS */
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/allcategory`)
@@ -59,26 +59,27 @@ const All_Category = () => {
       (item) => item.category === activeCategory
     ) || [];
 
-  /* NEXT CATEGORY LOGIC */
+  /* NEXT CATEGORY */
   const currentIndex = categoriesOrder.indexOf(activeCategory);
   const nextCategory =
     categoriesOrder[(currentIndex + 1) % categoriesOrder.length];
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
 
       <div className="category-wrapper">
 
-        {/* TITLE */}
         <h2 className="page-title">All Categories</h2>
+
         <h3 className="page-title2">
           {categoryLabels[activeCategory]}
         </h3>
 
-        {/* PRODUCTS */}
         <div className="product-grid">
+
           {filteredProducts.map((item, index) => {
+
             const sizes = item.sizes || [];
 
             const activeSize =
@@ -92,7 +93,6 @@ const All_Category = () => {
             return (
               <div key={index} className="product-card">
 
-                {/* SIZE SELECT */}
                 <div className="qty-box">
                   <select
                     value={selectedSize[index] || sizes[0]?.label}
@@ -111,7 +111,6 @@ const All_Category = () => {
                   </select>
                 </div>
 
-                {/* IMAGE */}
                 <div className="img-box">
                   <img
                     src={`${BASE_URL}${item.imageUrl}`}
@@ -119,8 +118,8 @@ const All_Category = () => {
                   />
                 </div>
 
-                {/* DETAILS */}
                 <div className="card-body">
+
                   <h4>{item.name}</h4>
 
                   <div className="price-row">
@@ -143,31 +142,70 @@ const All_Category = () => {
                     )}
                   </div>
 
-                  <button
-                    className="add-btn"
-                    disabled={!priceAvailable}
-                  >
-                    Add to Cart
-                  </button>
+                  <div className="btn-row">
+
+                    {/* ADD TO CART */}
+                    <button
+                      className="add-btn"
+                      disabled={!priceAvailable}
+                      onClick={() => {
+
+                        const cart =
+                          JSON.parse(localStorage.getItem("cart")) || [];
+
+                        cart.push({
+                          name: item.name,
+                          price: activeSize.price,
+                          size: activeSize.label,
+                          image: item.imageUrl
+                        });
+
+                        localStorage.setItem("cart", JSON.stringify(cart));
+
+                        toast.success("Item added to cart 🛒");
+
+                      }}
+                    >
+                      Add to Cart
+                    </button>
+
+                    <button
+                      className="view-btn"
+                      onClick={() =>
+                        navigate(`/productdetails/${item.name}`)
+                      }
+                    >
+                      View Product
+                    </button>
+
+                  </div>
+
                 </div>
 
               </div>
             );
           })}
+
         </div>
 
-        {/* NEXT CATEGORY ARROW */}
         <div
           className="arrow-wrapper"
           onClick={() => setActiveCategory(nextCategory)}
         >
           <div className="arrow-circle">→</div>
+
           <p className="next-category-text">
             {categoryLabels[nextCategory]}
           </p>
         </div>
 
       </div>
+
+      {/* TOAST */}
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+      />
     </>
   );
 };

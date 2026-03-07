@@ -3,7 +3,7 @@ import "./Home.css";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
-import Header from "./Header";
+// import Header from "./Header";
 import axios from "axios";
 
 const Home = () => {
@@ -29,7 +29,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
 
       {/* CAROUSEL */}
       {carousel && (
@@ -47,43 +47,52 @@ const Home = () => {
       )}
 
       {/* ORGANIC RANGE */}
-      <div className="organic-range">
-        <h2>Our Organic Range</h2>
-      </div>
-      <div className="range-list">
-        {products.map((item, index) => (
-          <div
-            key={index}
-            className="range-item"
-            onClick={() => {
-              let category = "rajabogam";
 
-              if (item.name.toLowerCase().includes("rice"))
-                category = "rajabogam";
-              else if (item.name.toLowerCase().includes("millet"))
-                category = "millet";
-              else if (item.name.toLowerCase().includes("pulse") || item.name.toLowerCase().includes("dhal"))
-                category = "dhal";
-              else if (item.name.toLowerCase().includes("oil"))
-                category = "oils";
+      <section className="organic-range">
 
-              navigate(`/allcategories/${category}`);
-            }}
-          >
-            <div className="range-circle">
-              <img
-                src={`${BASE_URL}${item.imageUrl}`}
-                alt={item.name}
-              />
+        <h2 className="range-title">Our Organic Range</h2>
+
+        <div className="range-grid">
+          {products.map((item, index) => (
+
+            <div
+              key={index}
+              className="range-item"
+              onClick={() => {
+
+                let category = "rajabogam";
+
+                if (item.name.toLowerCase().includes("rice"))
+                  category = "rajabogam";
+                else if (item.name.toLowerCase().includes("millet"))
+                  category = "millet";
+                else if (item.name.toLowerCase().includes("pulse") || item.name.toLowerCase().includes("dhal"))
+                  category = "dhal";
+                else if (item.name.toLowerCase().includes("oil"))
+                  category = "oils";
+
+                navigate(`/allcategories/${category}`);
+              }}
+            >
+
+              <div className="range-img">
+                <img
+                  src={`${BASE_URL}${item.imageUrl}`}
+                  alt={item.name}
+                />
+              </div>
+
+              <p>{item.name}</p>
+
             </div>
 
-            <p>{item.name}</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+
+      </section>
 
       {/* BEST SELLING */}
-      <div className="best-selling">
+      <div id="best-selling" className="best-selling">
         <h2>BEST SELLING PRODUCTS</h2>
 
         <div className="best-selling-list">
@@ -106,7 +115,7 @@ const Home = () => {
                   )}
                 </div>
 
-                <button className="bs-btn">
+                <button className="bs-btn" onClick={() => navigate(`/productdetails/${item.name}`)}>
                   View Product →
                 </button>
               </div>

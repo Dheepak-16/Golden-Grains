@@ -34,7 +34,7 @@ const SetPassword = () => {
     try {
       const res = await axios.post(`${API}/resetpassword`, {
         email,
-        password: newPassword,
+        newPassword: newPassword,
       });
 
       alert(res.data.message);

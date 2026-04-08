@@ -1,48 +1,85 @@
 import React, { useEffect, useState } from "react";
-// import Header from "./Header";
 import { FaTrash } from "react-icons/fa";
 import "./CartPage.css";
+import axios from "axios";
 
 const BASE_URL = "http://localhost:2000";
 
 const CartPage = () => {
 
   const [cartItems, setCartItems] = useState([]);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [orderData, setOrderData] = useState(null);
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const updated = cart.map((item) => ({
-      ...item,
-      qty: item.qty || 1
-    }));
+    const loadCart = () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    setCartItems(updated);
+      const updated = cart.map((item) => ({
+        ...item,
+        qty: item.qty || 1,
+        price: Number(item.price) || 0   // ✅ FIX
+      }));
+
+      setCartItems(updated);
+    };
+
+    loadCart();
+
+    // ✅ LISTEN FOR REAL-TIME UPDATES
+    window.addEventListener("cartUpdated", loadCart);
+
+    return () => {
+      window.removeEventListener("cartUpdated", loadCart);
+    };
+
   }, []);
 
   const updateCart = (items) => {
+
     setCartItems(items);
     localStorage.setItem("cart", JSON.stringify(items));
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user?.userId) {
+      axios.post(`${BASE_URL}/api/auth/savecart`, {
+        userId: user.userId,
+        cart: items
+      });
+    }
+
+    window.dispatchEvent(new Event("cartUpdated"));
   };
 
   const increaseQty = (index) => {
-    const items = [...cartItems];
-    items[index].qty += 1;
-    updateCart(items);
+
+    const updated = [...cartItems];
+    updated[index].qty += 1;
+
+    setCartItems(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
   };
 
   const decreaseQty = (index) => {
-    const items = [...cartItems];
-    if (items[index].qty > 1) {
-      items[index].qty -= 1;
-      updateCart(items);
+
+    const updated = [...cartItems];
+
+    if (updated[index].qty > 1) {
+      updated[index].qty -= 1;
     }
+
+    setCartItems(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
   };
 
   const removeItem = (index) => {
-    const items = [...cartItems];
-    items.splice(index, 1);
-    updateCart(items);
+
+    const updated = cartItems.filter((_, i) => i !== index);
+
+    setCartItems(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
   };
 
   const orderPrice = cartItems.reduce(
@@ -53,10 +90,46 @@ const CartPage = () => {
   const deliveryPrice = cartItems.length > 0 ? 60 : 0;
   const totalPrice = orderPrice + deliveryPrice;
 
+  /* ================= CHECKOUT ================= */
+
+  const handleCheckout = async () => {
+
+    if (cartItems.length === 0) {
+      alert("Cart is empty ❌");
+      return;
+    }
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const orderId = Math.floor(100000 + Math.random() * 900000);
+
+    const date = new Date();
+    date.setDate(date.getDate() + 2);
+
+    const newOrder = {
+      orderId,
+      date: new Date().toDateString(),
+      deliveryDate: date.toDateString(),
+      items: cartItems,
+      total: totalPrice
+    };
+
+    // ✅ SAVE IN BACKEND
+    await axios.post(`${BASE_URL}/api/auth/placeorder`, {
+      userId: user.userId,
+      order: newOrder
+    });
+
+    // UI (DON'T CHANGE)
+    setOrderData(newOrder);
+    setShowSuccess(true);
+
+    localStorage.removeItem("cart");
+    setCartItems([]);
+  };
+
   return (
     <>
-      {/* <Header /> */}
-
       <div className="cart-page">
 
         {/* LEFT SIDE */}
@@ -73,12 +146,8 @@ const CartPage = () => {
 
             <div className="cart-row" key={index}>
 
-              {/* PRODUCT */}
               <div className="cart-product">
-                <img
-                  src={`${BASE_URL}${item.image}`}
-                  alt={item.name}
-                />
+                <img src={`${BASE_URL}${item.image}`} alt={item.name} />
 
                 <div className="product-info">
                   <h4>{item.name}</h4>
@@ -91,35 +160,14 @@ const CartPage = () => {
                 </div>
               </div>
 
-              {/* PRICE */}
-              <div className="price">
-                ₹{item.price}
-              </div>
+              <div className="price">₹{item.price}</div>
 
-              {/* QUANTITY */}
               <div className="quantity">
-
-                <button
-                  className="qty-btn"
-                  onClick={() => decreaseQty(index)}
-                >
-                  -
-                </button>
-
-                <span className="qty-number">
-                  {item.qty}
-                </span>
-
-                <button
-                  className="qty-btn"
-                  onClick={() => increaseQty(index)}
-                >
-                  +
-                </button>
-
+                <button onClick={() => decreaseQty(index)}>-</button>
+                <span>{item.qty}</span>
+                <button onClick={() => increaseQty(index)}>+</button>
               </div>
 
-              {/* TOTAL */}
               <div className="total">
                 ₹{item.price * item.qty}
               </div>
@@ -151,13 +199,60 @@ const CartPage = () => {
             <span>₹{totalPrice}</span>
           </div>
 
-          <button className="checkout-btn">
+          <button className="checkout-btn" onClick={handleCheckout}>
             Check Out
           </button>
 
         </div>
 
       </div>
+
+      {/* ================= SUCCESS POPUP ================= */}
+
+      {showSuccess && orderData && (
+
+        <div className="success-overlay">
+
+          <div className="success-card">
+
+            <div className="success-icon">✓</div>
+
+            <h1 className="success-title">Order Confirmed</h1>
+            <p className="success-subtitle">
+              Your order has been placed successfully
+            </p>
+
+            <div className="success-info">
+              <p><strong>Order ID:</strong> #{orderData.orderId}</p>
+              <p><strong>Delivery:</strong> {orderData.deliveryDate}</p>
+            </div>
+
+            <h3 className="items-title">Items</h3>
+
+            <div className="items-list">
+              {orderData.items.map((item, i) => (
+                <div key={i} className="item-row">
+                  <span>{item.name}</span>
+                  <span>₹{item.price * item.qty}</span>
+                </div>
+              ))}
+            </div>
+
+            <h2 className="total-text">Total: ₹{orderData.total}</h2>
+
+            <button
+              className="close-btn"
+              onClick={() => setShowSuccess(false)}
+            >
+              Continue Shopping
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
+
     </>
   );
 };

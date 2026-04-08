@@ -11,7 +11,7 @@
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "dom": "^0.0.3",
-    "firebase": "^12.7.0",
+    "firebase": "^12.11.0",
     "navigate": "^0.3.6",
     "nodemailer": "^7.0.12",
     "react": "^19.2.3",

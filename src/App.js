@@ -13,7 +13,9 @@ import ProductDetails from './components/ProductDetails';
 import CartPage from './components/CartPage';
 import AboutUs from './components/AboutUs';
 import Contact from './components/Contact';
-// import ProductDetails from "./pages/ProductDetails";   
+import Profile from './components/Profile';
+import CustomerSupport from './components/CustomerSupport';
+// import Address from './components/Address';  
 
 function App() {
   return (
@@ -33,9 +35,10 @@ function App() {
           <Route path="/productdetails/:name" element={<ProductDetails />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/aboutus" element={<AboutUs />} />
-          {/* <Route path="/product/:id" element={<ProductDetails/>} /> */}
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/customersupport" element={<CustomerSupport />} />
         </Routes>
-        <Contact/>  
+        <Contact />
       </BrowserRouter>
     </div>
   );

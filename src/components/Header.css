@@ -11,7 +11,7 @@
 
 /* BACKGROUND SHAPE */
 
-.header::before{
+.header::before {
     content: "";
     position: absolute;
     width: 350px;
@@ -50,6 +50,16 @@
     object-fit: cover;
     background: white;
     padding: 5px;
+}
+
+/* LOGO ROTATION */
+.logo img {
+    transition: transform 0.8s ease-in-out;
+    transform-style: preserve-3d;
+}
+
+.logo:hover img {
+    transform: rotateY(360deg);
 }
 
 /* ================= NAV MENU ================= */
@@ -172,19 +182,19 @@
 
 /* ================= SEARCH ================= */
 
-.search-container{
-width:100%;
-background:#fff;
-padding:20px 30px;
-border-top:1px solid #eee;
+.search-container {
+    width: 100%;
+    background: #fff;
+    padding: 20px 30px;
+    border-top: 1px solid #eee;
 
-position:absolute;
-top:100%;
-left:0;
+    position: absolute;
+    top: 100%;
+    left: 0;
 
-z-index:2000;
+    z-index: 2000;
 
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .search-container input {

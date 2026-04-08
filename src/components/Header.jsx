@@ -15,12 +15,13 @@ const BASE_URL = "http://localhost:2000";
 const Header = () => {
 
   const [user, setUser] = useState(null);
-  const [showLogout, setShowLogout] = useState(false);
   const [cartCount, setCartCount] = useState(0);
 
   const [showSearch, setShowSearch] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [products, setProducts] = useState([]);
+
+  const [rotate, setRotate] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,25 +30,29 @@ const Header = () => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) setUser(JSON.parse(storedUser));
 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartCount(cart.length);
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      setCartCount(cart.length);
+    };
 
-    /* GET ALL PRODUCTS FOR SEARCH */
+    updateCartCount();
 
+    window.addEventListener("cartUpdated", updateCartCount);
+
+    /* 🔥 ADD THIS (IMPORTANT) */
     axios
       .get(`${BASE_URL}/api/allcategory`)
       .then((res) => {
         const allProducts = res.data.categories || [];
         setProducts(allProducts);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("Search API error:", err));
+
+    return () => {
+      window.removeEventListener("cartUpdated", updateCartCount);
+    };
 
   }, []);
-
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
 
   /* SEARCH FILTER */
 
@@ -92,11 +97,10 @@ const Header = () => {
             </li>
 
             <li onClick={() => navigate("/aboutus")}>
-              {/* <AiOutlineHeart />  */}
               About Us
             </li>
 
-            <li>Track Order</li>
+            {/* <li>Track Order</li> */}
 
           </ul>
         </nav>
@@ -112,12 +116,16 @@ const Header = () => {
             />
           </div>
 
-          {/* USER */}
+          {/* USER PROFILE */}
           <div
             className="user-box"
-            onMouseEnter={() => user && setShowLogout(true)}
-            onMouseLeave={() => setShowLogout(false)}
-            onClick={() => !user && navigate("/login")}
+            onClick={() => {
+              if (user) {
+                navigate("/profile");
+              } else {
+                navigate("/login");
+              }
+            }}
           >
 
             <IoPersonCircle />
@@ -126,15 +134,9 @@ const Header = () => {
               {user ? user.name : "Login"}
             </span>
 
-            {user && showLogout && (
-              <div className="logout-box" onClick={handleLogout}>
-                Logout
-              </div>
-            )}
-
           </div>
 
-          <AiOutlineHeart />
+          {/* <AiOutlineHeart /> */}
 
           {/* CART */}
           <div

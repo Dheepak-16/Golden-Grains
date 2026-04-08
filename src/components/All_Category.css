@@ -2,7 +2,7 @@
 
 .category-wrapper {
   padding: 40px;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   position: relative;
   background: #eef1ee;
   overflow: hidden;
@@ -180,8 +180,8 @@
   padding: 11px;
   border-radius: 8px;
   border: 1px solid #e11d48;
-  background: #fff;
-  color: #e11d48;
+  background:green;
+  color: white;
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
@@ -203,7 +203,7 @@
   width: 100%;
   padding: 11px;
   border-radius: 8px;
-  border: 1px solid #2e7d32;
+  border: 1px solid #b54c4c;
   background: #fff;
   color: #2e7d32;
   font-weight: 600;
@@ -212,7 +212,7 @@
 }
 
 .view-btn:hover {
-  background: #2e7d32;
+  background: #be3c3c;
   color: #fff;
 }
 

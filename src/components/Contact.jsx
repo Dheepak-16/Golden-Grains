@@ -69,12 +69,27 @@ const Contact = () => {
                 <div className="footer-column">
                     <h3>Customer Support</h3>
                     <ul>
-                        <li>FAQs</li>
-                        <li>Delivery Information</li>
-                        <li>Payment Methods</li>
-                        <li>Return Policy</li>
-                        <li>Terms & Conditions</li>
-                        <li>Privacy Policy</li>
+
+                        <li onClick={() => navigate("/customersupport")}>
+                            FAQs
+                        </li>
+
+                        <li onClick={() => navigate("/customersupport")}>
+                            Delivery Information
+                        </li>
+
+                        <li onClick={() => navigate("/customersupport")}>
+                            Payment Methods
+                        </li>
+
+                        <li onClick={() => navigate("/customersupport")}>
+                            Return Policy
+                        </li>
+
+                        <li onClick={() => navigate("/customersupport")}>
+                            Contact Support
+                        </li>
+
                     </ul>
                 </div>
 

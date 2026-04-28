@@ -1,5 +1,3 @@
-/* ================= MAIN WRAPPER ================= */
-
 .category-wrapper {
   padding: 40px;
   /* min-height: 100vh; */
@@ -7,8 +5,6 @@
   background: #eef1ee;
   overflow: hidden;
 }
-
-/* BACKGROUND SHAPE */
 
 .category-wrapper::before {
   content: "";
@@ -22,8 +18,6 @@
   z-index: 0;
 }
 
-/* KEEP CONTENT ABOVE SHAPE */
-
 .page-title,
 .page-title2,
 .product-grid,
@@ -31,8 +25,6 @@
   position: relative;
   z-index: 2;
 }
-
-/* ================= TITLES ================= */
 
 .page-title {
   text-align: center;
@@ -49,8 +41,6 @@
   color: #2e7d32;
 }
 
-/* ================= GRID ================= */
-
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -58,8 +48,6 @@
   max-width: 1200px;
   margin: auto;
 }
-
-/* ================= PRODUCT CARD ================= */
 
 .product-card {
   background: linear-gradient(135deg,#f9fff7,#ffffff);
@@ -81,8 +69,6 @@
   0 6px 12px rgba(0,0,0,0.06);
 }
 
-/* ================= SIZE DROPDOWN ================= */
-
 .qty-box {
   position: absolute;
   top: 16px;
@@ -97,8 +83,6 @@
   cursor: pointer;
   background: #fff;
 }
-
-/* ================= IMAGE ================= */
 
 .img-box {
   height: 180px;
@@ -120,8 +104,6 @@
   transform: scale(1.05);
 }
 
-/* ================= PRODUCT TITLE ================= */
-
 .card-body h4 {
   font-size: 16px;
   font-weight: 600;
@@ -129,8 +111,6 @@
   text-align: center;
   color: #222;
 }
-
-/* ================= PRICE SECTION ================= */
 
 .price-row {
   display: flex;
@@ -140,15 +120,11 @@
   margin-bottom: 16px;
 }
 
-/* FINAL PRICE */
-
 .price {
   font-size: 20px;
   font-weight: 700;
   color: #2e7d32;
 }
-
-/* MRP */
 
 .old-price {
   font-size: 15px;
@@ -156,15 +132,11 @@
   text-decoration: line-through;
 }
 
-/* NOT AVAILABLE */
-
 .not-available {
   color: #999;
   font-size: 16px;
   font-weight: 600;
 }
-
-/* ================= BUTTON ROW ================= */
 
 .btn-row {
   display: flex;
@@ -172,8 +144,6 @@
   gap: 10px;
   margin-top: 10px;
 }
-
-/* ================= ADD TO CART ================= */
 
 .add-btn {
   width: 100%;
@@ -197,8 +167,6 @@
   cursor: not-allowed;
 }
 
-/* ================= VIEW PRODUCT ================= */
-
 .view-btn {
   width: 100%;
   padding: 11px;
@@ -215,8 +183,6 @@
   background: #be3c3c;
   color: #fff;
 }
-
-/* ================= NEXT CATEGORY BUTTON ================= */
 
 .arrow-wrapper {
   margin-top: 60px;
@@ -255,7 +221,6 @@
   cursor: pointer;
 }
 
-/* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {
 

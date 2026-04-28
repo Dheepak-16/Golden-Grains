@@ -6,7 +6,8 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../GoogleAuth/GoogleAuthentication";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-const API = "http://localhost:2000/api/auth";
+// const API = "http://localhost:2000/api/auth";
+const API = `${process.env.REACT_APP_API_URL}/auth`;
 
 function Signup() {
     const navigate = useNavigate();
@@ -62,7 +63,8 @@ function Signup() {
             const googleUser = result.user;
 
             const res = await axios.post(
-                "http://localhost:2000/api/auth/googlesignUp",
+                // "http://localhost:2000/api/auth/googlesignUp",
+                `${API}/googlesignUp`,
                 {
                     name: googleUser.displayName,
                     email: googleUser.email,
@@ -121,7 +123,7 @@ function Signup() {
 
                 <div className="social-buttons">
                     <button className="social-btn" onClick={handleGoogleClick}>Google</button>
-                    <button className="social-btn">Apple</button>
+                    {/* <button className="social-btn">Apple</button> */}
                 </div>
 
                 <p className="footer-text">

@@ -1,5 +1,3 @@
-/* RESET */
-
 * {
   margin: 0;
   padding: 0;
@@ -9,16 +7,11 @@
 body {
   overflow-x: hidden;
   font-family: Arial, Helvetica, sans-serif;
-
-  /* Soft organic gradient background */
   background: linear-gradient(180deg,
       #f8fff5 0%,
       #ffffff 45%,
       #f5fff3 100%);
 }
-
-
-/* ================= HEADER ================= */
 
 .background {
   width: 100%;
@@ -44,9 +37,6 @@ body {
   object-fit: contain;
 }
 
-
-/* NAVBAR */
-
 .homebar-items {
   display: flex;
   justify-content: center;
@@ -70,9 +60,6 @@ body {
   color: #2e7d32;
 }
 
-
-/* HEADER ICONS */
-
 .header-icons {
   display: flex;
   align-items: center;
@@ -89,18 +76,12 @@ body {
   padding-left: 4px;
 }
 
-
-
-/* ================= BANNER ================= */
-
 .banner-img {
   width: 100%;
   height: 450px;
   object-fit: cover;
   object-position: top;
 }
-
-/* ================= ORGANIC RANGE ================= */
 
 .organic-range {
 
@@ -123,9 +104,6 @@ body {
   color: #2e7d32;
 }
 
-
-/* GRID */
-
 .range-grid {
 
   display: flex;
@@ -141,9 +119,6 @@ body {
   margin: auto;
 }
 
-
-/* RANGE ITEM */
-
 .range-item {
 
   display: flex;
@@ -157,9 +132,6 @@ body {
   transition: 0.3s;
 
 }
-
-
-/* IMAGE */
 
 .range-img {
 
@@ -210,9 +182,6 @@ body {
 
 }
 
-
-/* TEXT */
-
 .range-item p {
 
   margin-top: 15px;
@@ -225,14 +194,9 @@ body {
 
 }
 
-
-/* ================= BEST SELLING ================= */
-
 .best-selling {
   padding: 80px 40px;
   text-align: center;
-
-  /* modern gradient */
   background: linear-gradient(135deg,
       #f7fff4,
       #ffffff);
@@ -240,8 +204,6 @@ body {
   position: relative;
   overflow: hidden;
 }
-
-/* decorative organic shape */
 
 .best-selling::before {
   content: "";
@@ -266,10 +228,6 @@ body {
   margin-bottom: 50px;
 }
 
-
-
-/* GRID */
-
 .best-selling-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -281,10 +239,6 @@ body {
   position: relative;
   z-index: 2;
 }
-
-
-
-/* PRODUCT CARD */
 
 .bs-card {
   background: #fff;
@@ -307,10 +261,6 @@ body {
     0 6px 12px rgba(0, 0, 0, 0.08);
 }
 
-
-
-/* IMAGE */
-
 .bs-image {
   height: 200px;
   display: flex;
@@ -325,18 +275,10 @@ body {
   object-fit: contain;
 }
 
-
-
-/* PRODUCT INFO */
-
 .bs-info h4 {
   font-size: 18px;
   margin-bottom: 10px;
 }
-
-
-
-/* PRICE */
 
 .price-row {
   display: flex;
@@ -356,10 +298,6 @@ body {
   text-decoration: line-through;
   color: #aaa;
 }
-
-
-
-/* BUTTON */
 
 .bs-btn {
   margin-top: 14px;
@@ -384,9 +322,6 @@ body {
   transform: scale(1.05);
 }
 
-
-
-/* ================= RESPONSIVE ================= */
 
 @media (max-width:992px) {
 

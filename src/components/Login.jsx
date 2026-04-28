@@ -162,7 +162,8 @@ import { auth, provider } from "../GoogleAuth/GoogleAuthentication";
 import { signInWithPopup } from "firebase/auth";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-const API = "http://localhost:2000/api/auth";
+// const API = "http://localhost:2000/api/auth";
+const API = `${process.env.REACT_APP_API_URL}/auth`;
 
 function Login() {
   const [showForgot, setShowForgot] = useState(false);
@@ -183,7 +184,7 @@ function Login() {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  /* ================= LOGIN ================= */
+  /* LOGIN */
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -199,9 +200,9 @@ function Login() {
     try {
       const res = await axios.post(`${API}/login`, state);
 
-      console.log("LOGIN RESPONSE:", res.data); // ✅ DEBUG
+      console.log("LOGIN RESPONSE:", res.data);
 
-      // ✅ STORE CORRECT DATA
+      // STORE CORRECT DATA
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
@@ -221,7 +222,7 @@ function Login() {
     }
   }
 
-  /* ================= GOOGLE LOGIN ================= */
+  /* GOOGLE LOGIN */
 
   const handleGoogleClick = async () => {
     try {
@@ -237,9 +238,9 @@ function Login() {
         }
       );
 
-      console.log("GOOGLE RESPONSE:", res.data); // ✅ DEBUG
+      console.log("GOOGLE RESPONSE:", res.data);
 
-      // ✅ STORE CORRECT USER
+      // STORE CORRECT USER
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
@@ -318,9 +319,9 @@ function Login() {
               >
                 Google
               </button>
-              <button className="social-btn" type="button">
+              {/* <button className="social-btn" type="button">
                 Apple
-              </button>
+              </button> */}
             </div>
 
             {/* SIGNUP */}

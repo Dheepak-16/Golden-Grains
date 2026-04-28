@@ -3,7 +3,8 @@ import "./OtpVerification.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API = "http://localhost:2000/api/auth";
+// const API = "http://localhost:2000/api/auth";
+const API = `${process.env.REACT_APP_API_URL}/auth`;
 
 const OtpVerification = () => {
   const navigate = useNavigate();

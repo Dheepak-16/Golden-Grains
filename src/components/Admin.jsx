@@ -11,7 +11,7 @@ const AdminDashboard = () => {
   return (
     <div className="admin-container">
 
-      {/* SIDEBAR */}
+      /* SIDEBAR */
       <div className="admin-sidebar">
         <h2>Admin Panel</h2>
 
@@ -23,7 +23,7 @@ const AdminDashboard = () => {
         </ul>
       </div>
 
-      {/* CONTENT */}
+      /* CONTENT */
       <div className="admin-content">
 
         <h1>Add Product</h1>

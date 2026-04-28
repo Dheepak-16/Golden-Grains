@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./Address.css";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:2000/api/auth";
+// const BASE_URL = "http://localhost:2000/api/auth";
+const BASE_URL = `${process.env.REACT_APP_API_URL}/auth`;
 
 const Address = () => {
 
@@ -50,7 +51,7 @@ const Address = () => {
         });
     };
 
-    /* ================= SAVE ADDRESS (API) ================= */
+    /*  SAVE ADDRESS (API)  */
 
     const saveAddress = async () => {
 
@@ -86,8 +87,6 @@ const Address = () => {
 
             <h2>Addresses</h2>
 
-            {/* EMPTY STATE */}
-
             {addresses.length === 0 && (
 
                 <div className="empty">
@@ -105,7 +104,7 @@ const Address = () => {
 
             )}
 
-            {/* ADDRESS LIST */}
+            /* ADDRESS LIST */
 
             {addresses.map((addr, index) => (
 
@@ -149,7 +148,7 @@ const Address = () => {
 
             ))}
 
-            {/* MODAL */}
+            /* MODAL */
 
             {showModal && (
 

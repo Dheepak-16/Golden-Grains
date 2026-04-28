@@ -3,7 +3,8 @@ import { FaTrash } from "react-icons/fa";
 import "./CartPage.css";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:2000";
+// const BASE_URL = "http://localhost:2000";
+const BASE_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
 const CartPage = () => {
 
@@ -19,7 +20,7 @@ const CartPage = () => {
       const updated = cart.map((item) => ({
         ...item,
         qty: item.qty || 1,
-        price: Number(item.price) || 0   // ✅ FIX
+        price: Number(item.price) || 0  
       }));
 
       setCartItems(updated);
@@ -27,7 +28,7 @@ const CartPage = () => {
 
     loadCart();
 
-    // ✅ LISTEN FOR REAL-TIME UPDATES
+    // LISTEN FOR REAL-TIME UPDATES
     window.addEventListener("cartUpdated", loadCart);
 
     return () => {
@@ -90,7 +91,7 @@ const CartPage = () => {
   const deliveryPrice = cartItems.length > 0 ? 60 : 0;
   const totalPrice = orderPrice + deliveryPrice;
 
-  /* ================= CHECKOUT ================= */
+  /* CHECKOUT */
 
   const handleCheckout = async () => {
 
@@ -114,7 +115,7 @@ const CartPage = () => {
       total: totalPrice
     };
 
-    // ✅ SAVE IN BACKEND
+    // SAVE IN BACKEND
     await axios.post(`${BASE_URL}/api/auth/placeorder`, {
       userId: user.userId,
       order: newOrder

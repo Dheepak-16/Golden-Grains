@@ -9,8 +9,6 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.08);
 }
 
-/* Header */
-
 .detail-header {
   display: flex;
   justify-content: space-between;
@@ -47,8 +45,6 @@
   color: #094d1b;
 }
 
-/* Image */
-
 .detail-image {
   text-align: center;
   margin-bottom: 25px;
@@ -65,8 +61,6 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-/* Body */
-
 .detail-body h2 {
   margin-bottom: 10px;
   font-size: 24px;
@@ -78,8 +72,6 @@
   margin-bottom: 6px;
   font-size: 14px;
 }
-
-/* Price */
 
 .detail-price {
   display: flex;
@@ -99,8 +91,6 @@
   color: #999;
 }
 
-/* Size dropdown */
-
 .size-select select {
   width: 100%;
   padding: 10px;
@@ -113,8 +103,6 @@
 .size-select select:focus {
   border-color: #0b6623;
 }
-
-/* Cart Button */
 
 .detail-cart-btn {
   width: 100%;

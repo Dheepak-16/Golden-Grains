@@ -13,12 +13,14 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const BASE_URL = "http://localhost:2000";
+  // const BASE_URL = "http://localhost:2000";
+  const BASE_URL = process.env.REACT_APP_API_URL.replace("/api", "");
+
 
   /* ================= FETCH DATA ================= */
 
   useEffect(() => {
-
+    const BASE_URL = process.env.REACT_APP_API_URL.replace("/api", "");
     /* CAROUSEL */
     axios.get(`${BASE_URL}/api/carousel`)
       .then(res => setCarousel(res.data))
@@ -51,8 +53,6 @@ const Home = () => {
 
     navigate(`/allcategories/${category}`);
   };
-
-  /* ================= UI ================= */
 
   return (
     <div>

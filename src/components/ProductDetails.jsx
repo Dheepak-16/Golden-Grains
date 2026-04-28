@@ -8,7 +8,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./ProductDetails.css";
 
-const BASE_URL = "http://localhost:2000";
+// const BASE_URL = "http://localhost:2000";
+const API_URL = process.env.REACT_APP_API_URL;
+const BASE_URL = API_URL.replace("/api", "");
 
 const ProductDetails = () => {
 
@@ -21,10 +23,11 @@ const ProductDetails = () => {
   useEffect(() => {
 
     axios
-      .get(`${BASE_URL}/api/productdetails/${name}`)
+      // .get(`${BASE_URL}/api/productdetails/${name}`)
+      .get(`${API_URL}/productdetails/${name}`)
       .then((res) => {
 
-        console.log("Product Data:", res.data); // debug
+        console.log("Product Data:", res.data);
 
         setProduct(res.data);
         setSelectedSize(res.data?.sizes?.[0]?.label || "");

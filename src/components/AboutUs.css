@@ -8,8 +8,6 @@
   flex-wrap:wrap;
 }
 
-/* LEFT */
-
 .about-left{
   flex:1;
   position:relative;
@@ -57,7 +55,6 @@
   color:#333;
 }
 
-/* RIGHT */
 
 .about-right{
   flex:1;
@@ -95,7 +92,6 @@
   background:#e65c00;
 }
 
-/* RESPONSIVE */
 
 @media (max-width:900px){
 

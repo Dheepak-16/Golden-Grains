@@ -189,7 +189,6 @@
   font-size: 14px;
 }
 
-/* Items */
 .items-title {
   margin-bottom: 10px;
 }
@@ -204,12 +203,10 @@
   padding: 5px 0;
 }
 
-/* Total */
 .total-text {
   margin: 15px 0;
 }
 
-/* Button */
 .close-btn {
   background: #22c55e;
   color: white;
@@ -226,7 +223,6 @@
   background: #16a34a;
 }
 
-/* ================= MOBILE FIX ================= */
 
 @media (max-width:426px) {
 

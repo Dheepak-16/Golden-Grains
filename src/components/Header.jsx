@@ -10,7 +10,8 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:2000";
+// const BASE_URL = "http://localhost:2000";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const Header = () => {
 
@@ -39,7 +40,7 @@ const Header = () => {
 
     window.addEventListener("cartUpdated", updateCartCount);
 
-    /* 🔥 ADD THIS (IMPORTANT) */
+    /* ADD THIS (IMPORTANT) */
     axios
       .get(`${BASE_URL}/api/allcategory`)
       .then((res) => {

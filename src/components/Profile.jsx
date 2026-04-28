@@ -3,7 +3,8 @@ import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:2000/api/auth";
+// const BASE_URL = "http://localhost:2000/api/auth";
+const BASE_URL = `${process.env.REACT_APP_API_URL}/auth`;
 
 const Profile = () => {
 
@@ -18,7 +19,7 @@ const Profile = () => {
     id: "",
     name: "",
     email: "",
-    mobileNumber: "",   // ✅ added
+    mobileNumber: "",  
     profilePic: ""
   });
 
@@ -57,7 +58,7 @@ const Profile = () => {
     if (storedUser) {
       setUser({
         ...storedUser,
-        id: storedUser.userId   // 🔥 MAIN FIX
+        id: storedUser.userId  
       });
     } else {
       navigate("/login");
@@ -562,7 +563,8 @@ const Profile = () => {
 
                         {/* IMAGE */}
                         <img
-                          src={`http://localhost:2000${item.image}`}
+                          // src={`http://localhost:2000${item.image}`}
+                          src={`${process.env.REACT_APP_API_URL.replace("/api", "")}${item.image}`}
                           alt={item.name}
                           className="order-img"
                         />

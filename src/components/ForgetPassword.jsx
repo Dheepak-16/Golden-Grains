@@ -3,7 +3,8 @@ import "./ForgetPassword.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API = "http://localhost:2000/api/auth";
+// const API = "http://localhost:2000/api/auth";
+const API = `${process.env.REACT_APP_API_URL}/auth`;
 
 const ForgetPassword = ({ onClose, onSuccess }) => {
     const navigate = useNavigate();
@@ -27,7 +28,7 @@ const ForgetPassword = ({ onClose, onSuccess }) => {
             const res = await axios.post(`${API}/forgetpassword`, { email });
             alert(res.data.message);
             
-            localStorage.setItem("resetEmail", email); // ⭐ Important
+            localStorage.setItem("resetEmail", email);
             onSuccess(email);
             navigate('/otpVerification');
 

@@ -6,7 +6,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const BASE_URL = "http://localhost:2000"; 
+// const BASE_URL = "http://localhost:2000"; 
+const BASE_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 // const BASE_URL = "https://golden-grains-backend.vercel.app/api";
 // const IMAGE_URL = "https://golden-grains-backend.vercel.app";
 
@@ -48,11 +49,20 @@ const All_Category = () => {
   }, [category]);
 
   /* FETCH PRODUCTS */
+  // useEffect(() => {
+  //   axios
+  //     .get(`${BASE_URL}/api/allcategory`)
+  //     .then((res) => setAllCategory(res.data))
+  //     .catch((err) => console.log(err));
+  // }, []);
   useEffect(() => {
+    const BASE_URL = process.env.REACT_APP_API_URL.replace("/api", "");
+
     axios
       .get(`${BASE_URL}/api/allcategory`)
       .then((res) => setAllCategory(res.data))
       .catch((err) => console.log(err));
+
   }, []);
 
   /* FILTER PRODUCTS */

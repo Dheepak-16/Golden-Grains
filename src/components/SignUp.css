@@ -108,7 +108,12 @@
   margin-bottom: 25px;
 }
 
-.social-btn {
+.social-buttons :hover{
+  background-color: rgb(207, 202, 202);
+  transition: 0.5s;
+}
+
+/* .social-btn {
   flex: 1;
   padding: 12px;
   border-radius: 12px;
@@ -116,7 +121,7 @@
   background: #fff;
   cursor: pointer;
   font-size: 14px;
-}
+} */
 
 .social-btn :hover {
   background-color: #777;
@@ -133,7 +138,7 @@
   font-weight: 500;
 }
 
-/* 📱 Responsive */
+
 @media (max-width: 480px) {
   .signup-card {
     padding: 30px 25px;

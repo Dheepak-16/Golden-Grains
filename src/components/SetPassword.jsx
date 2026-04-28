@@ -4,7 +4,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-const API = "http://localhost:2000/api/auth";
+// const API = "http://localhost:2000/api/auth";
+const API = `${process.env.REACT_APP_API_URL}/auth`;
 
 const SetPassword = () => {
   const navigate = useNavigate();
